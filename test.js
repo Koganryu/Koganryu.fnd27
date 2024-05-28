@@ -3,7 +3,6 @@ let chart;
 const ctx2d = document.getElementById('gamecanvas').getContext('2d');
 
 function balanceChart() {
-    // ctx2d.clearRect(0, 0, ctx2d.canvas.width, ctx2d.canvas.height);
     chart = new Chart(ctx2d, {
     type: 'line',
     data: {
@@ -16,7 +15,7 @@ function balanceChart() {
                 borderColor: 'rgba(0, 188, 212, 1)',
                 backgroundColor: 'rgba(0, 188, 212, 0.5)',
                 stack: 1,
-                fill: 'true',
+                fill: 'origin',
             },
             {
                 label: '鷹',
@@ -64,16 +63,23 @@ function balanceChart() {
     },
   })
 }
-balanceChart()
+
 
 
 
 function updating(){
-  chart.data.labels=[1,2,3,4,5]
-  chart.data.datasets[0].data = [15,17,18,10,7];
-  chart.data.datasets[1].data = [15,17,18,10,7]
+  chart.data.labels=daylist;
+  chart.data.datasets[0].data = changingOfDove;
+  chart.data.datasets[1].data = changingOfHawk;
   chart.update()
 }
+function x3Times(){
+    xSpeed = 1;
+}
+function x2Times(){
+    xSpeed = 5;
+}
+function x1Times(){
+    xSpeed = 10;
+}
 
-const updata = document.getElementById("update");
-updata.addEventListener("click", updating);
