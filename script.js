@@ -38,8 +38,8 @@ const Scenes = {
 
 const startEverything = function () {
     // 描画コンテキストの取得
-    canvas = document.getElementById("gamecanvas");
-    g = canvas.getContext("2d");
+    const ctx2d = document.getElementById('gamecanvas').getContext('2d');
+
     // 初期化
     init();
     balanceChart()
