@@ -24,7 +24,9 @@ let interval;
 const daylist = [0];
 const changingOfDove = [numberOfDove]
 const changingOfHawk = [numberOfHawk]
-
+document.getElementById("numberDisplayDove").textContent = numberOfDove;
+document.getElementById("numberDisplayDove").textContent = numberOfDove;
+let xSpeed = 10;
 
 
 // シーンの定義
@@ -38,13 +40,11 @@ const startEverything = function () {
     // 描画コンテキストの取得
     canvas = document.getElementById("gamecanvas");
     g = canvas.getContext("2d");
-
     // 初期化
     init();
-    // ゲームループの設定 60FPS
     balanceChart()
     interval = setInterval("gameloop()", 100);
-};
+}
 
 function stop() {
   if (situation) {
@@ -72,12 +72,15 @@ function gameloop() {
       update();
       draw();
       countFrame += 1;
-        if (countFrame % 10 === 0) {
+        if (countFrame % xSpeed === 0) {
           day += 1;
           daylist.push(day);
+          coordinate = [];
+          birdcage = [];
+          resourcePlace = [];
           getRandomCoodinate();
-          makeBirdcage();
-          selectBird();
+          makeBirdcage(); 
+          // selectBird();
           makeResourcePlace();
           launchBirds();
           fightBirds();
@@ -85,20 +88,21 @@ function gameloop() {
           console.log(`Days ${day}`);
           console.log(`Dove : ${numberOfDove}`);
           console.log(`Hawk : ${numberOfHawk}`);
-          }
           changingOfDove.push(numberOfDove);
           changingOfHawk.push(numberOfHawk);
-          chart.data.labels = changingOfDove;
-          chart.data.labels = changingOfHawk;
-          chart.update()
-          
-        } else {
+          // chart.data.labels = changingOfDove;
+          // chart.data.labels = changingOfHawk;
+          document.getElementById("numberDisplayDove").textContent = numberOfDove;
+          document.getElementById("numberDisplayHawk").textContent = numberOfHawk;
+          updating()
+        }
+    } else {
         clearInterval(interval);
     }
 }
 
 function update() {
-  // ゲームプレイ中
+
   if (scene == Scenes.GameMain) {
     dove.posx = dove.posx + (goal[0] - dove.posx) / 32;
     dove.posy = dove.posy + (goal[1] - dove.posy) / 32;
@@ -106,7 +110,7 @@ function update() {
     if (dove.posx === goal[0]) {
         dove.posx === goal[0];
     }
-   // ゲームオーバー中
+
   } 
 }
 
@@ -168,11 +172,20 @@ class Player {
 }
 
 
-// const ctx2d = document.getElementById('gamecanvas').getContext('2d');
 
-
-
-const start = document.getElementById("start");
-start.addEventListener("click", startEverything);
-const stop1 = document.getElementById("stop");
-stop1.addEventListener("click", stop);
+function updateNumber() {
+  const inputNumberDove = parseInt(document.getElementById("inputNumberDove").value);
+  const inputNumberHawk = parseInt(document.getElementById("inputNumberHawk").value);
+  if (!isNaN(inputNumberDove) && isNaN(inputNumberHawk)) {
+      numberOfDove = inputNumberDove; 
+      document.getElementById("numberDisplayDove").textContent = numberOfDove; // HTML要素に反映
+  } else if (isNaN(inputNumberDove) && !isNaN(inputNumberHawk)) {
+      numberOfHawk = inputNumberHawk; 
+      document.getElementById("numberDisplayHawk").textContent = numberOfHawk// HTML要素に反映
+  } else if (!isNaN(inputNumberDove) && !isNaN(inputNumberHawk)) {
+      numberOfDove = inputNumberDove; 
+      document.getElementById("numberDisplayDove").textContent = numberOfDove;   
+      numberOfHawk = inputNumberHawk;
+      document.getElementById("numberDisplayHawk").textContent = numberOfHawk;
+  }
+}
